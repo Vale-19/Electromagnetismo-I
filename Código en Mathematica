@@ -1,0 +1,19 @@
+(*1. Parámetros*)phi0 = 5; a = 1; b = 1; nMax = 25;
+
+(*2. Definición del Potencial*)
+phi[x_, y_, z_] := (16*phi0/Pi^2)*
+   Sum[(1/(n*m))*Exp[-Pi*Sqrt[(n/a)^2 + (m/b)^2]*x]*Sin[n*Pi*y/a]*
+     Sin[m*Pi*z/b], {n, 1, nMax, 2}, {m, 1, nMax, 2}];
+
+(*3. Distancia interactiva en el eje x*)
+Manipulate[
+ SliceDensityPlot3D[
+  phi[x, y, z], {"CenterPlane", x == xCorte}, {x, 0, 2.5}, {y, 0, 
+   a}, {z, 0, b}, PlotRange -> {0, phi0}, 
+  ColorFunction -> "TemperatureMap", PlotLegends -> Automatic, 
+  AxesLabel -> {"Eje X", "Eje Y", "Eje Z"}, 
+  PlotLabel -> 
+   Style["Mapeo del Potencial \[Phi](x,y,z) dentro del tubo", 14, 
+    Bold], ImageSize -> Large, 
+  PerformanceGoal -> "Quality"], {{xCorte, 0.01, 
+   "Profundidad (Eje X)"}, 0.01, 2.4, Appearance -> "Labeled"}]
